@@ -2,12 +2,16 @@
 
 use App\Http\Controllers\bookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/' , [bookController::class , 'dashboard']);
+Route::get('/' , [bookController::class , 'pos']);
+Route::group(['prefix'=>'stocks'] , function() {
+    Route::get('/' , [bookController::class , 'stocks']);
+});
 
 Route::group(['prefix' => 'book'] , function() {
     Route::get('/index' , [bookController::class , 'index'])->name('book.index');
@@ -27,4 +31,5 @@ Route::group(['prefix' => 'api'] , function(){
     Route::post('/categories/create' , [CategoryController::class , 'store']);
     Route::put('/categories/update/{id}' , [CategoryController::class , 'update']);
     Route::delete('/categories/delete/{id}' , [CategoryController::class , 'delete']);
+    Route::post('/stock/add' , [StockController::class , 'store'])->name('add.stock');
 });

@@ -12,7 +12,7 @@
 @endsection
 
 @section('content')
-    <div class="container-custom">
+    <main class="container-custom">
         <a href="/" class="btn btn-primary">home</a>
         <button id="btn-create" class="btn btn-success m-1" onclick="create()">create</button>
         <div id="input"></div>
@@ -32,6 +32,7 @@
 
 @section('script')
 <script>
+    $('#stocks').addClass('menu-action');
 
     const get = async ()=>{
         const getData = await fetch('/api/categories')

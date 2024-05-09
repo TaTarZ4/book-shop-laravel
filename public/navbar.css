@@ -1,0 +1,45 @@
+:root{
+    --nav-bg-color: #BE00DD;
+    --bg-color: #fff;
+}
+aside.left-menu{
+    background: var(--nav-bg-color);
+    min-height: 100vh;
+
+    nav{
+        /* width: 100px; */
+        position: sticky;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        color: #fff;
+    }
+    
+    i{
+        font-size: 25px;
+    }
+    
+    nav div , nav a{
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 20px;
+        padding: 0 20px 0 10px;
+        margin-left: 10px;
+        color: #fff;
+    }
+    
+    .menu-action{
+        background: var(--bg-color);
+        color: black;
+        border-radius: 12px 0 0 12px;
+    }
+    
+    .menu{
+        background: #8b00a0;
+        padding: 10px 0px 10px 0px;
+        margin: 0;
+    }
+}
+

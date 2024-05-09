@@ -2,7 +2,7 @@
 @section('head')
 <style>
     .container {
-        width: 800px;
+        /* width: 800px; */
         margin: auto;
         margin-top: 2rem;
     }
@@ -10,10 +10,11 @@
 @endsection
 
 @section('content')
-<body class="container">
+<main class="container">
+    <h1 class="text-center m-5">Management Books</h1>
     <nav class="d-flex flex-row justify-content-between">
         <div class="action g-5">
-            <a href="/" class="btn btn-primary">Go back</a>
+            <a href="/stocks" class="btn btn-primary">Go back</a>
             <a href="/book/create" class="btn btn-success">New Book</a>
         </div>
         <div class="action g-5">
@@ -26,6 +27,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
+                <th scope="col">qty</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -35,6 +37,7 @@
                     <th>{{$book->id}}</th>
                     <th>{{$book->name}}</th>
                     <th>{{$book->price}}</th>
+                    <th>{{$book->qty}}</th>
                     <th style="display: flex; gap: 5px;">
                         <a href="/book/show/{{$book->id}}" class="btn btn-primary">Show</a>
                         <form action="/book/edit/{{ $book->id}}">
@@ -50,8 +53,11 @@
             @endforeach
         </tbody>
     </table>
-</body>
+</main>
 @endsection
 
 @section('script')
+    <script>
+        $('#stocks').addClass('menu-action');
+    </script>
 @endsection

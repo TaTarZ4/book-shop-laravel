@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Stock extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'book_is','qty'
     ];
 
-    public function category_book()
+    public function book()
     {
-        return $this->belongsToMany(book::class , 'category_books');
+        return $this->hasOne(Book::class , 'id' , 'book_is');
     }
 }

@@ -45,7 +45,7 @@
 @endsection
 
 @section('content')
-<body>
+<main>
     <div class="container">
         <div class="tittle">
             <div class="img">
@@ -56,7 +56,7 @@
                 <div class="tittle-price">{{$book->price}} บาท</div>
                 <div class="tittle-category">
                     <div class="">หมวดหมู่:</div>
-                    @foreach($book->categories as $category)
+                    @foreach($book->category_book as $category)
                     <div class="item">{{$category->name}}</div>
                     @endforeach
                 </div>
@@ -64,11 +64,14 @@
         </div>
         <div class="description">{{$book->description}}</div>
         <div class="action m-5">
-        <a href="/" class="btn btn-primary">Go Back</a>
+        <a href="/book/index" class="btn btn-primary">Go Back</a>
         </div>
     </div>  
-</body>
+</main>
 @endsection
 
 @section('script')
+    <script>
+        $('#stocks').addClass('menu-action');
+    </script>
 @endsection
