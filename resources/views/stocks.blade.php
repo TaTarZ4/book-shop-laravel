@@ -113,7 +113,7 @@
     </section>
     
     <!-- Modal -->
-    <div class="modal" tabindex="-1" role="dialog" id="myInput">
+    <div class="modal fade" tabindex="-1" role="dialog" id="myInput">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -123,8 +123,8 @@
             </button>
           </div>
           <div class="modal-body">
-            <h6>qty</h6>
-            <input type="text" class="form-control" placeholder="QTY" name="qty">
+            <h6>เพื่มจำนวนสินค้า</h6>
+            <input type="text" class="form-control" placeholder="จำนวนสินค้า" name="qty">
             <input type="text" value="" style="display: none;" name="book_id">
           </div>
           <div class="modal-footer">

@@ -22,8 +22,12 @@ class bookController extends Controller
     }
 
     public function pos()
-    {
-        return view('pos');
+    {   
+        $books = Book::all();
+        // dd($books);
+        return view('pos')->with([
+            'books' => $books
+        ]);
     }
 
     public function get() 
