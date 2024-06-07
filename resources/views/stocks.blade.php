@@ -84,7 +84,7 @@
             <a href="/book/index" class="btn btn-warning btn-manage">Management</a>
         </div>
         
-        <article>
+        <article class="mb-5">
             @foreach($books as $book)
                 <div class="item" id="book{{$book->id}}">
                     <a href="/book/show/{{$book->id}}">
@@ -127,9 +127,12 @@
             <input type="text" class="form-control" placeholder="จำนวนสินค้า" name="qty">
             <input type="text" value="" style="display: none;" name="book_id">
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="summit-stock">Save changes</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="modalHide()">Close</button>
+          <div class="modal-footer d-flex justify-content-between">
+            <a class="btn btn-warning" href="">History</a>
+            <div class="modal-footer-right">
+                <button type="button" class="btn btn-primary" id="summit-stock">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="modalHide()">Close</button>
+            </div>
           </div>
         </div>
       </div>
@@ -153,8 +156,8 @@
             $('#myInput').modal('show');
 
             let val = $(this).find('input[name=book_id]').val();
-
             $('#myInput').find('input[name=book_id]').val(val);
+            $('#myInput').find('a').attr('href',`/book/show/${val}`)
         });
         
         function modalHide () {

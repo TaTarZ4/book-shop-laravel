@@ -64,9 +64,30 @@
         </div>
         <div class="description">{{$book->description}}</div>
         <div class="action m-5">
-        <a href="/book/index" class="btn btn-primary">Go Back</a>
+        <a href="{{ url()->previous() }}" class="btn btn-primary">Go Back</a>
         </div>
-    </div>  
+    </div>
+    <section class="historyStock m-auto mb-5">
+        <h1 class="text-center">History Stocks</h1>
+        <table class="table table-striped text-center w-75 m-auto">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Date</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($stocks as $stock)
+                    <tr>
+                        <td>{{$loop->index+1}}</td>
+                        <td>{{$stock->updated_at}}</td>
+                        <td>{{$stock->qty}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </section>
 </main>
 @endsection
 

@@ -56,8 +56,11 @@ class bookController extends Controller
         // })->get('name');
         // $book->categories = $category_book;
         // dd($book->category_book);
+        $stocks = Stock::where('book_id' , $request->id)->get();
+        // dd($stocks); 
         return view('book.show')->with([
-            'book' => $book
+            'book' => $book,
+            'stocks' => $stocks
         ]);
     }
 
