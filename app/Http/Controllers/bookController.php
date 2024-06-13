@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Category_book;
+use App\Models\Order;
+use App\Models\OrderBook;
 use App\Models\Stock;
 use Illuminate\Database\Eloquent\Builder;
 use Symfony\Component\CssSelector\Node\FunctionNode;
@@ -24,9 +26,11 @@ class bookController extends Controller
     public function pos()
     {   
         $books = Book::all();
+        $orders = Order::all();
         // dd($books);
         return view('pos')->with([
-            'books' => $books
+            'books' => $books,
+            'orders' => $orders
         ]);
     }
 

@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\bookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StockController;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -11,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/' , [bookController::class , 'pos']);
 Route::group(['prefix'=>'stocks'] , function() {
     Route::get('/' , [bookController::class , 'stocks']);
+});
+
+Route::group(['prefix'=>'order'] , function(){
+    Route::post('/store' , [OrderController::class , 'store']);
+    Route::get('/show/{id}' , [OrderController::class , 'show']);
 });
 
 Route::group(['prefix' => 'book'] , function() {
@@ -32,4 +40,13 @@ Route::group(['prefix' => 'api'] , function(){
     Route::put('/categories/update/{id}' , [CategoryController::class , 'update']);
     Route::delete('/categories/delete/{id}' , [CategoryController::class , 'delete']);
     Route::post('/stock/add' , [StockController::class , 'store'])->name('add.stock');
+});
+
+Route::group(['prefix' => 'customer'] , function(){
+    Route::get('/check/{id}' , [CustomerController::class , 'checkId']);
+    Route::get('/' , [CustomerController::class , 'index']);
+    Route::get('/getCustomers' , [CustomerController::class , 'getCustomer']);
+    Route::post('/store' , [CustomerController::class , 'store']);
+    Route::put('/update/{id}' , [CustomerController::class , 'update']);
+    Route::delete('/destroy/{id}' , [CustomerController::class , 'destroy']);
 });

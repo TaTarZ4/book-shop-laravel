@@ -18,6 +18,10 @@
             <i class="bi bi-boxes"></i>
             <span class="menu-text">Stocks</span>
         </a>
+        <a href="/customer/" class="menu-icon-people" id="people">
+            <i class="bi bi-people"></i>
+            <span class="menu-text">Customer Member</span>
+        </a>
     </nav>
 </aside>
 

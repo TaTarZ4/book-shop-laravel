@@ -1,6 +1,7 @@
 @extends('templates.book')
 
 @section('head')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         .head-pos{
             text-align: center;
@@ -158,36 +159,69 @@
                 </div>
             </aside>
         </section>
-        <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                <div class="modal-header d-flex justify-content-between">
-                    <h5 class="modal-title">Successfully</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+        </div>
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between">
+                <h5 class="modal-title">Successfully</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>Member Phone</h3>
+                <input id="numberPhone" type="text" class="form-control" placeholder="Phone number" onchange="setNumberPhone()">
+                <p id="checkMember" class="fw-light"></p>
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">Total</span>
+                    <span>$ <span id="s-total">0</span></span>
                 </div>
-                <div class="modal-body">
-                    <div class="d-flex justify-content-between">
-                        <span class="fw-bold">Total</span>
-                        <span>$ <span id="s-total">0</span></span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <span>Cash</span>
-                        <span>$ <span id="s-cash">0</span></span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <span>Change</span>
-                        <span class="fw-bold text-pp">$ <span id="s-change">0</span></span>
-                    </div>
+                <div class="d-flex justify-content-between">
+                    <span>Cash</span>
+                    <span>$ <span id="s-cash">0</span></span>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary close">ตกลง</button>
-                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                </div>
+                <div class="d-flex justify-content-between">
+                    <span>Change</span>
+                    <span class="fw-bold text-pp">$ <span id="s-change">0</span></span>
                 </div>
             </div>
+            <div class="modal-footer">
+                <form action="/order/store" method="post" id="sent_form">
+                </form>
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            </div>
+            </div>
         </div>
+    </div>
+    <div class="mt-5">
+        <h3 class="text-center w-100">History Order</h3>
+        <table class="table">
+            <thead>
+                <th>No</th>
+                <th>Customer Name</th>
+                <th>date</th>
+                <th>action</th>
+            </thead>
+            <tbody>
+                @foreach($orders as $order)
+                <tr>
+                    <td>{{$order->id}}</td>
+
+                    @if($order->customer_id)
+                    <td>{{$order->customer_id}}</td>
+                    @else
+                    <td>No member</td>
+                    @endif
+
+                    <td>{{$order->created_at}}</td>
+                    <td>
+                    <a href="order/show/{{$order->id}}" class="btn btn-primary">show</a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 @endsection
 
@@ -197,7 +231,13 @@
         let total = 0;
         let cash = 0;
         let change = 0;
+        let NumberPhone = '';
         // var a = {!! json_encode($books->toArray()) !!};
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        })
 
         $('#pos').addClass('menu-action');
         $('.left-item-add').click(
@@ -315,12 +355,46 @@
             $('#s-cash').html(cash);
             $('#s-total').html(total);
             $('#s-change').html(change);
-            $('#myModal').modal('show'); 
-            resetOrder();   
+            $('#myModal').modal('show');
+            let data = `
+                        @csrf
+                        <button type="submit" class="btn btn-primary close">ตกลง</button>
+                    `;
+            productsOrder.map((e)=>{
+                data += `<input type="hidden" name="id[]" value="${e.id}"/>
+                        <input type="hidden" name="qty[]" value="${e.qty}"/>`
+            });
+
+            data += `
+                <input type="hidden" name="cash" value="${cash}"/>
+                <input type="hidden" name="customer" value="${NumberPhone}"/>
+                `;
+            
+            $('#sent_form').html(data);
+            // resetOrder();   
         });
         $('.close').click(()=>{
             $('#myModal').modal('hide');
         })
+        function setNumberPhone(){
+            let number = $('#numberPhone').val();
+
+            $.ajax({
+                type: 'GET',
+                url: `customer/check/${number}`,
+                data: {'phone':number},
+                success: function(res){
+                    // console.log(res.status);
+                    $('#checkMember').html(res.status);
+                    if(res.status == 'Member'){
+                        $('#checkMember').css({"color":"green"});
+                    }else{
+                        $('#checkMember').css({"color":"red"});
+                    }
+                }
+            })
+            numberPhone = number;
+        }
 
     </script>
 @endsection
